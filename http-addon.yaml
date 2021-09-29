@@ -1,0 +1,13 @@
+kind: HTTPScaledObject
+apiVersion: http.keda.sh/v1alpha1
+metadata:
+    name: http-addon-scaledobject-2
+spec:
+    host: kedatest.secnds.com
+    scaleTargetRef:
+        deployment: go-echo
+        service: go-echo
+        port: 80
+    replicas:
+        min: 0
+        max: 16

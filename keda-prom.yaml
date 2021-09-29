@@ -1,0 +1,21 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: go-echo-new-prometheus
+  namespace: keda-test
+  labels:
+    deploymentName: go-echo-new 
+spec:
+  scaleTargetRef:
+    name: go-echo-new
+  pollingInterval: 15
+  cooldownPeriod:  30
+  maxReplicaCount: 16
+  minReplicaCount: 1
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://prometheus-server.keda-test.svc.cluster.local:9090
+      metricName: access_frequency
+      threshold: '80'
+      query: sum(rate(nginx_ingress_controller_requests[30s]))

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: go-echo
+  name: go-echo
+  namespace: keda-test
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8000
+  type: ClusterIP  
+  selector:
+    app: go-echo
+  sessionAffinity: None
